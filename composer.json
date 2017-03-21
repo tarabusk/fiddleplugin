@@ -2,7 +2,7 @@
   "name": "fiddlehed-plugin/fiddlehed",
   "type": "wordpress-plugin",
   "require": {
-    "composer/installers": "v1.2.0"
+    "composer/installers": "~1.0.12"
   },
   "version": "dev-master"
 }
