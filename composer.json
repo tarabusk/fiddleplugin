@@ -1,5 +1,5 @@
 {
-  "name": "fiddlehed-plugin/fiddlehed",
+  "name": "fiddleplugin/fiddlehed",
   "type": "wordpress-plugin",
   "require": {
     "composer/installers": "~1.0.12"
