@@ -7,7 +7,7 @@ License:     GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
-function fiddlehed_breadcrumbs() {
+function fiddlehed_breadcrumbs() { 
 
   /* === OPTIONS === */
   $text['home']     = 'Home'; // text for the 'Home' link
