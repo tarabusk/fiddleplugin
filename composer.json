@@ -1,6 +1,13 @@
 {
   "name": "fiddleplugin/fiddlehed",
+  "description": "A plugin to add functionalities to the FiddleHed Website",
   "type": "wordpress-plugin",
+  "authors": [
+      {
+          "name": "Gaëlle Vaudaine",
+          "email": "tarabuk@gmail.com"
+      }
+  ],
   "require": {
     "composer/installers": "~1.0.12"
   },
