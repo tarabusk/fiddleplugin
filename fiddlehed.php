@@ -291,7 +291,7 @@ if( function_exists('acf_add_options_page') ) {
 
 function fiddleHed_google_analytics() {
   if (class_exists('acf') )
-  $ga_code =  get_field ('ga_tracking_code'));
+  $ga_code =  get_field ('ga_tracking_code', 'option');
   if ($ga_code) { ?>
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
