@@ -7,7 +7,7 @@ License:     GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
-function fiddlehed_breadcrumbs() { 
+function fiddlehed_breadcrumbs() {
 
   /* === OPTIONS === */
   $text['home']     = 'Home'; // text for the 'Home' link
@@ -256,4 +256,50 @@ function fiddlehed_mce4_options($init) {
     return $init;
 }
 add_filter('tiny_mce_before_init', 'fiddlehed_mce4_options');
+
+/************************************************/
+/* Adding Links to previous and next Page       */
+/************************************************/
+/*
+function fiddleHedSiblings($link) {
+    global $post;
+    $siblings = get_pages('child_of='.$post->post_parent.'&parent='.$post->post_parent);
+    foreach ($siblings as $key=>$sibling){
+        if ($post->ID == $sibling->ID){
+            $ID = $key;
+        }
+    }
+    $closest = array('before'=>get_permalink($siblings[$ID-1]->ID),'after'=>get_permalink($siblings[$ID+1]->ID));
+
+    if ($link == 'before' || $link == 'after') { echo $closest[$link]; } else { return $closest; }
+}
+*/
+
+/************************************************/
+/* Adding option Page                           */
+/************************************************/
+
+if( function_exists('acf_add_options_page') ) {
+
+	acf_add_options_page('Options');
+
+}
+
+/************************************************/
+/* Adding GOOGLE ANALYTIC CODE                  */
+/************************************************/
+
+function fiddleHed_google_analytics() { ?>
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-XXXXXXXX-XX', 'auto');
+		ga('send', 'pageview');
+
+		</script>
+<?php }
+add_action( 'wp_head', 'fiddleHed_google_analytics', 10 );
 ?>
