@@ -308,4 +308,21 @@ function fiddleHed_google_analytics() {
   }
 }
 add_action( 'wp_head', 'fiddleHed_google_analytics', 10 );
+
+/************************************************/
+/* Allow Subscriber to see Private posts and pages
+/************************************************/
+
+
+  $subRole = get_role( 'subscriber' ); // subscriber
+  $subRole->add_cap( 'read_private_posts' );
+  $subRole->add_cap( 'read_private_pages' );
+  // Redirect to home page on login
+  function loginRedirect( $redirect_to, $request_redirect_to, $user ) {
+    if ( is_a( $user, 'WP_User' ) && $user->has_cap( 'edit_posts' ) === false ) {
+      return get_bloginfo( 'siteurl' );
+    }
+    return $redirect_to; }
+
+  add_filter( 'login_redirect', 'loginRedirect', 10, 3 );
 ?>
