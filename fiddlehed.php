@@ -328,14 +328,14 @@ function fiddleHed_add_roles_on_plugin_activation() {
 
   function fiddleHed_loginRedirect( $redirect_to, $request_redirect_to, $user ) {
     if ( is_a( $user, 'WP_User' ) && $user->has_cap( 'edit_posts' ) === false ) {
-      return get_bloginfo( 'siteurl' );
+      return get_site_url ();
     }
     return $redirect_to; }
 
   add_filter( 'login_redirect', 'fiddleHed_loginRedirect', 10, 3 );
 
 /************************************************/
-/* Redirect those who can not edit posts to home page on login
+/* Redirect those who can not edit posts to home page on login page
 /************************************************/
 
 add_action( 'wp', 'fiddleHed_my_private_page_404' );
@@ -352,4 +352,22 @@ function fiddleHed_my_private_page_login_message( $message ) {
 		$message .= sprintf( '<p class="message">%s</p>', __( 'The page you tried to visit is restricted. Please log in or register to continue.' ) );
 	return $message;
 }
+
+/************************************************/
+/* Change Login Logo
+/************************************************/
+
+function fiddleHed_my_login_logo() { ?>
+    <style type="text/css">
+        #login h1 a, .login h1 a {
+            background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/images/fiddleguy.jpg);
+		height:144px;
+		width:172px;
+		background-size: 172px 144px;
+		background-repeat: no-repeat;
+        	padding-bottom: 30px;
+        }
+    </style>
+<?php }
+add_action( 'login_enqueue_scripts', 'fiddleHed_my_login_logo' );
 ?>
