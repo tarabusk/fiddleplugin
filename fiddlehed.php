@@ -310,19 +310,46 @@ function fiddleHed_google_analytics() {
 add_action( 'wp_head', 'fiddleHed_google_analytics', 10 );
 
 /************************************************/
-/* Allow Subscriber to see Private posts and pages
+/* Create a role for beta tester
 /************************************************/
 
+function fiddleHed_add_roles_on_plugin_activation() {
+       add_role( 'beta_tester', 'Beta Tester',
+                array( 'read' => true,
+                       'read_private_posts' => 'true',
+                       'read_private_pages' => 'true',
+                       'level_0' => true ) );
+  }
+  register_activation_hook( __FILE__, 'fiddleHed_add_roles_on_plugin_activation' );
 
-  $subRole = get_role( 'subscriber' ); // subscriber
-  $subRole->add_cap( 'read_private_posts' );
-  $subRole->add_cap( 'read_private_pages' );
-  // Redirect to home page on login
-  function loginRedirect( $redirect_to, $request_redirect_to, $user ) {
+  /************************************************/
+  /* Redirect those who can not edit posts to home page on login
+  /************************************************/
+
+  function fiddleHed_loginRedirect( $redirect_to, $request_redirect_to, $user ) {
     if ( is_a( $user, 'WP_User' ) && $user->has_cap( 'edit_posts' ) === false ) {
       return get_bloginfo( 'siteurl' );
     }
     return $redirect_to; }
 
-  add_filter( 'login_redirect', 'loginRedirect', 10, 3 );
+  add_filter( 'login_redirect', 'fiddleHed_loginRedirect', 10, 3 );
+
+/************************************************/
+/* Redirect those who can not edit posts to home page on login
+/************************************************/
+
+add_action( 'wp', 'fiddleHed_my_private_page_404' );
+function fiddleHed_my_private_page_404() {
+	$queried_object = get_queried_object();
+	if ( isset( $queried_object->post_status ) && 'private' == $queried_object->post_status && !is_user_logged_in() ) {
+		wp_safe_redirect( add_query_arg( 'private', '1', wp_login_url( $_SERVER['REQUEST_URI'] ) ) );
+		exit;
+	}
+}
+add_filter( 'login_message', 'fiddleHed_my_private_page_login_message' );
+function fiddleHed_my_private_page_login_message( $message ) {
+	if ( isset( $_REQUEST['private'] ) && $_REQUEST['private'] == 1 )
+		$message .= sprintf( '<p class="message">%s</p>', __( 'The page you tried to visit is restricted. Please log in or register to continue.' ) );
+	return $message;
+}
 ?>
