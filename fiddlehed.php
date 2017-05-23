@@ -310,7 +310,7 @@ function fiddleHed_google_analytics() {
 add_action( 'wp_head', 'fiddleHed_google_analytics', 10 );
 
 /************************************************/
-/* Create a role for beta tester + allow subscriber to read private post and pages (on plugin activation)
+/* Create a role for beta tester + allow editor to read private post and pages (on plugin activation)
 /************************************************/
 
 function fiddleHed_add_roles_on_plugin_activation() {
@@ -320,7 +320,7 @@ function fiddleHed_add_roles_on_plugin_activation() {
                        'read_private_pages' => 'true',
                        'level_0' => true ) );
 
-       $subRole = get_role( 'subscriber' );
+       $subRole = get_role( 'editor' );
        $subRole->add_cap( 'read_private_posts' );
        $subRole->add_cap( 'read_private_pages' );
   }
