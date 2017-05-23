@@ -310,7 +310,7 @@ function fiddleHed_google_analytics() {
 add_action( 'wp_head', 'fiddleHed_google_analytics', 10 );
 
 /************************************************/
-/* Create a role for beta tester
+/* Create a role for beta tester + allow subscriber to read private post and pages (on plugin activation)
 /************************************************/
 
 function fiddleHed_add_roles_on_plugin_activation() {
@@ -319,6 +319,10 @@ function fiddleHed_add_roles_on_plugin_activation() {
                        'read_private_posts' => 'true',
                        'read_private_pages' => 'true',
                        'level_0' => true ) );
+
+       $subRole = get_role( 'subscriber' );
+       $subRole->add_cap( 'read_private_posts' );
+       $subRole->add_cap( 'read_private_pages' );
   }
   register_activation_hook( __FILE__, 'fiddleHed_add_roles_on_plugin_activation' );
 
@@ -335,8 +339,9 @@ function fiddleHed_add_roles_on_plugin_activation() {
   add_filter( 'login_redirect', 'fiddleHed_loginRedirect', 10, 3 );
 */
 /************************************************/
-/* Redirect those who can not edit posts to home page on login page
+/* Redirect those who are not authorized to read private post to login form
 /************************************************/
+/* might be interesting to redirect them on anoter page explaining the process later on */
 
 add_action( 'wp', 'fiddleHed_my_private_page_404' );
 function fiddleHed_my_private_page_404() {
@@ -352,6 +357,8 @@ function fiddleHed_my_private_page_login_message( $message ) {
 		$message .= sprintf( '<p class="message">%s</p>', __( 'The page you tried to visit is restricted. Please log in or register to continue.' ) );
 	return $message;
 }
+
+
 
 /************************************************/
 /* Change Login Logo
