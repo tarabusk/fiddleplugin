@@ -372,9 +372,26 @@ function fiddleHed_my_login_logo() { ?>
 		width:172px;
 		background-size: 172px 144px;
 		background-repeat: no-repeat;
-        	padding-bottom: 30px;
         }
     </style>
 <?php }
 add_action( 'login_enqueue_scripts', 'fiddleHed_my_login_logo' );
+
+/************************************************/
+/* Change Login Message
+/************************************************/
+
+function fiddleHed_login_message() {
+    if (class_exists('acf') ) {
+      $strMessage = get_field ('text_login', 'option');
+      if ( $strMessage ){
+          return "<p>".$strMessage."</p>";
+      } else {
+          return '';
+      }
+    }
+}
+
+add_filter( 'login_message',  'fiddleHed_login_message' );
+
 ?>
