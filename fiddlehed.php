@@ -396,7 +396,7 @@ add_filter( 'login_message',  'fiddleHed_login_message' );
 
 
 /************************************************/
-/* Change Adding newsletter Drip script
+/*  Possibility to add code to footer
 /************************************************/
 
 function fiddleHed_add_code_footer() {
@@ -405,8 +405,7 @@ function fiddleHed_add_code_footer() {
   } else {
     $strMessage = '';
   }
-    echo $strMessage;
-
+  echo $strMessage;
 }
 add_action('wp_footer',  'fiddleHed_add_code_footer');
 ?>
