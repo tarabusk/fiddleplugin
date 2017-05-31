@@ -399,21 +399,14 @@ add_filter( 'login_message',  'fiddleHed_login_message' );
 /* Change Adding newsletter Drip script
 /************************************************/
 
-function fiddleHed_add_Drip_script() {
-    echo "
-<script type='text/javascript'>
-  var _dcq = _dcq || [];
-  var _dcs = _dcs || {};
-  _dcs.account = '5153654';
+function fiddleHed_add_code_footer() {
+  if (class_exists('acf') ) {
+    $strMessage = get_field ('code_footer', 'option');
+  } else {
+    $strMessage = '';
+  }
+    echo $strMessage;
 
-  (function() {
-    var dc = document.createElement('script');
-    dc.type = 'text/javascript'; dc.async = true;
-    dc.src = '//tag.getdrip.com/5153654.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(dc, s);
-  })();
-</script>";
 }
-add_action('wp_footer',  'fiddleHed_add_Drip_script');
+add_action('wp_footer',  'fiddleHed_add_code_footer');
 ?>
