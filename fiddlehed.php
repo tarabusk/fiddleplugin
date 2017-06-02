@@ -342,15 +342,21 @@ function fiddleHed_add_roles_on_plugin_activation() {
 /* Redirect those who are not authorized to read private post to login form
 /************************************************/
 /* might be interesting to redirect them on anoter page explaining the process later on */
-/*
+
 add_action( 'wp', 'fiddleHed_my_private_page_404' );
 function fiddleHed_my_private_page_404() {
 	$queried_object = get_queried_object();
 	if ( isset( $queried_object->post_status ) && 'private' == $queried_object->post_status && !is_user_logged_in() ) {
-		wp_safe_redirect( add_query_arg( 'private', '1', wp_login_url( $_SERVER['REQUEST_URI'] ) ) );
+    if (class_exists('acf')) {
+      $url_redirection_private = get_field ('url_redirection_private', 'option');
+      if ($url_redirection_private) {
+        wp_safe_redirect( add_query_arg( 'private', '1', $url_redirection_private )
+      }
+
+    }
 		exit;
 	}
-} */
+}
 add_filter( 'login_message', 'fiddleHed_my_private_page_login_message' );
 function fiddleHed_my_private_page_login_message( $message ) {
 	if ( isset( $_REQUEST['private'] ) && $_REQUEST['private'] == 1 )
@@ -358,24 +364,6 @@ function fiddleHed_my_private_page_login_message( $message ) {
 	return $message;
 }
 
-
-
-/************************************************/
-/* Change Login Logo
-/************************************************/
-
-function fiddleHed_my_login_logo() { ?>
-    <style type="text/css">
-        #login h1 a, .login h1 a {
-            background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/dist/images/fiddleguy.jpg);
-		height:144px;
-		width:172px;
-		background-size: 172px 144px;
-		background-repeat: no-repeat;
-        }
-    </style>
-<?php }
-add_action( 'login_enqueue_scripts', 'fiddleHed_my_login_logo' );
 
 /************************************************/
 /* Change Login Message
