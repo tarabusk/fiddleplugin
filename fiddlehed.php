@@ -411,7 +411,11 @@ add_filter('nav_menu_css_class' , __NAMESPACE__ . '\\nav_menu_add_post_status_cl
 function nav_menu_add_post_status_class($classes, $item){
     $post_status = get_post_status($item->object_id);
   	$user_role   =  preg_replace('/\s+/', '', get_current_user_role());
-
+    if ($user_role == '') {
+      $user_role = 'no-role';
+    } else {
+      $user_role = $user_role.'-role'
+    }
     $classes[] = $post_status.' '.$user_role;
     return $classes;
 }
