@@ -343,20 +343,7 @@ function fiddleHed_add_roles_on_plugin_activation() {
 /************************************************/
 /* might be interesting to redirect them on anoter page explaining the process later on */
 
-add_action( 'wp', 'fiddleHed_my_private_page_404' );
-function fiddleHed_my_private_page_404() {
-	$queried_object = get_queried_object();
-	if ( isset( $queried_object->post_status ) && 'private' == $queried_object->post_status && !is_user_logged_in() ) {
-    if (class_exists('acf')) {
-      $url_redirection_private = get_field ('url_redirection_private', 'option');
-      if ($url_redirection_private && $url_redirection_private != '') {
-        wp_safe_redirect( add_query_arg( 'private', '1', $url_redirection_private ));
-      }
 
-    }
-		exit;
-	}
-}
 add_filter( 'login_message', 'fiddleHed_my_private_page_login_message' );
 function fiddleHed_my_private_page_login_message( $message ) {
 	if ( isset( $_REQUEST['private'] ) && $_REQUEST['private'] == 1 )
