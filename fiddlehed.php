@@ -414,7 +414,7 @@ function nav_menu_add_post_status_class($classes, $item){
     if ($user_role == '') {
       $user_role = 'no-role';
     } else {
-      $user_role = $user_role.'-role'
+      $user_role = $user_role.'-role';
     }
     $classes[] = $post_status.' '.$user_role;
     return $classes;
