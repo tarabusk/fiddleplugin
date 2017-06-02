@@ -342,7 +342,7 @@ function fiddleHed_add_roles_on_plugin_activation() {
 /* Redirect those who are not authorized to read private post to login form
 /************************************************/
 /* might be interesting to redirect them on anoter page explaining the process later on */
-
+/*
 add_action( 'wp', 'fiddleHed_my_private_page_404' );
 function fiddleHed_my_private_page_404() {
 	$queried_object = get_queried_object();
@@ -350,7 +350,7 @@ function fiddleHed_my_private_page_404() {
 		wp_safe_redirect( add_query_arg( 'private', '1', wp_login_url( $_SERVER['REQUEST_URI'] ) ) );
 		exit;
 	}
-}
+} */
 add_filter( 'login_message', 'fiddleHed_my_private_page_login_message' );
 function fiddleHed_my_private_page_login_message( $message ) {
 	if ( isset( $_REQUEST['private'] ) && $_REQUEST['private'] == 1 )
