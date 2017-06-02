@@ -383,4 +383,57 @@ function fiddleHed_add_code_footer() {
   echo $strMessage;
 }
 add_action('wp_footer',  'fiddleHed_add_code_footer');
+
+
+/**
+ * Returns the translated role of the current user.
+ * No role, get false.
+ *
+ * @return string The translated name of the current role.
+ **/
+function get_current_user_role() {
+    global $wp_roles;
+
+    $current_user = wp_get_current_user();
+    $roles = $current_user->roles;
+    $role = array_shift( $roles );
+
+    return isset( $wp_roles->role_names[ $role ] ) ? translate_user_role( $wp_roles->role_names[ $role ] ) : FALSE;
+}
+
+/**
+ * Adding css rules to nav menus  with info of status page AND current user role
+ *
+ *
+ * @Add new CSS Rules to each nav menu.
+ **/
+add_filter('nav_menu_css_class' , __NAMESPACE__ . '\\nav_menu_add_post_status_class' , 10 , 2);
+function nav_menu_add_post_status_class($classes, $item){
+    $post_status = get_post_status($item->object_id);
+  	$user_role   =  preg_replace('/\s+/', '', get_current_user_role());
+
+    $classes[] = $post_status.' '.$user_role;
+    return $classes;
+}
+
+/************************************************/
+/*  Possibility to redirect unauthorized user to another page when landing on a private page
+/************************************************/
+
+function fiddleHed_my_private_page_404() {
+	$queried_object = get_queried_object();
+	if ( isset( $queried_object->post_status ) && 'private' == $queried_object->post_status && !is_user_logged_in() ) {
+    if (class_exists('acf')) {
+      $url_redirection_private = get_field ('url_redirection_private', 'option');
+      if ($url_redirection_private && $url_redirection_private != '') {
+        wp_safe_redirect( add_query_arg( 'private', '1', $url_redirection_private ));
+      }
+     //exit;
+    }
+		//exit;
+	}
+}
+add_action( 'wp', __NAMESPACE__ . '\\fiddleHed_my_private_page_404' );
+
+
 ?>
