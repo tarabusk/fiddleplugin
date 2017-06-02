@@ -350,7 +350,7 @@ function fiddleHed_my_private_page_404() {
     if (class_exists('acf')) {
       $url_redirection_private = get_field ('url_redirection_private', 'option');
       if ($url_redirection_private && $url_redirection_private != '') {
-        wp_safe_redirect( add_query_arg( 'private', '1', $url_redirection_private );
+        wp_safe_redirect( add_query_arg( 'private', '1', $url_redirection_private ));
       }
 
     }
