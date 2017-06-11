@@ -437,7 +437,32 @@ function fiddleHed_my_private_page_404() {
 		//exit;
 	}
 }
-add_action( 'wp', __NAMESPACE__ . '\\fiddleHed_my_private_page_404' );
+add_action( 'wp', 'fiddleHed_my_private_page_404' );
 
+//
+/************************************************/
+/*  add category support to pages
+/************************************************/
+
+function add_taxonomies_to_pages() {
+
+      register_taxonomy_for_object_type( 'category', 'page' );
+  }
+
+ add_action( 'init',  'add_taxonomies_to_pages' );
+
+ /**
+ * Show all parents, regardless of post status.
+ *
+ * @param   array  $args  Original get_pages() $args.
+ *
+ * @return  array  $args  Args set to also include posts with pending, draft, and private status.
+ */
+function fiddlehed_show_all_parents( $args ) {
+	$args['post_status'] = array( 'publish', 'private' );
+	return $args;
+}
+add_filter( 'page_attributes_dropdown_pages_args',  'fiddlehed_show_all_parents' );
+add_filter( 'quick_edit_dropdown_pages_args',  'fiddlehed_show_all_parents' );
 
 ?>
