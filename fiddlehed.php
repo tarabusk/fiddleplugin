@@ -465,4 +465,17 @@ function fiddlehed_show_all_parents( $args ) {
 add_filter( 'page_attributes_dropdown_pages_args',  'fiddlehed_show_all_parents' );
 add_filter( 'quick_edit_dropdown_pages_args',  'fiddlehed_show_all_parents' );
 
-?>
+
+/************************************************/
+/*  add plugin to display SUBSCRIBE button
+/************************************************/
+
+function fiddlehed_subscribe_sortcode ( $atts ) {
+
+  if (class_exists('acf') && get_field ('subscribe_button_link', 'options')) {
+    return '<a href="'.get_field ("subscribe_button_link", 'options' ) .'" class="button-subscribe">SUBSCRIBE</a>';
+  }
+
+
+}
+add_shortcode( 'subscribeFiddlehed',  'fiddlehed_subscribe_sortcode' );
