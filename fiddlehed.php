@@ -457,26 +457,7 @@ function fiddlehed_subscribe_sortcode ( $atts ) {
 add_shortcode( 'subscribeFiddlehed',  'fiddlehed_subscribe_sortcode' );
 
 
-/************************************************/
-/*  add Custom taxonomy FiddleHed Access Restrictions to pages - Enable categorization for page restriction for member purpose
-/************************************************/
 
-function fiddlehed_member_init() {
-	// create a new taxonomy
-	register_taxonomy(
-		'people',
-		'page',
-		array(
-			'label' => __( 'FiddleHed Access Restrictions' ),
-			'rewrite' => array( 'slug' => 'access-restricition' ),
-			'capabilities' => array(
-				'assign_terms' => 'edit_guides',
-				'edit_terms' => 'publish_guides'
-			)
-		)
-	);
-}
-add_action( 'init', 'fiddlehed_member_init' );
 
 //
 /************************************************/
