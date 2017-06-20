@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: FiddleHed
-Description: This plugin display breadcrump - Add features to WP Editor
+Description: Add features to FiddleHed Website
 Author:      tarabusk
 License:     GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -457,7 +457,25 @@ function fiddlehed_subscribe_sortcode ( $atts ) {
 add_shortcode( 'subscribeFiddlehed',  'fiddlehed_subscribe_sortcode' );
 
 
+/************************************************/
+/*  add Custom taxonomy FiddleHed Access Restrictions to pages - Enable categorization for page restriction for member purpose
+/************************************************/
 
+function fiddlehed_member_init() {
+	// create a new taxonomy
+	register_taxonomy(
+		'fiddlehed-restriction',
+
+		'page',
+		array(
+			'label' => __( 'FiddleHed Access Restrictions' ),
+			'rewrite' => array( 'slug' => 'access-restricition' ),
+			'hierarchical' => true
+
+		)
+	);
+}
+add_action( 'init',   'fiddlehed_member_init' );
 
 //
 /************************************************/
