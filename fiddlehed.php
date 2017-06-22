@@ -402,13 +402,30 @@ function get_current_user_role() {
 }
 
 /**
- * Adding css rules to nav menus  with info of status page AND current user role
+ * Adding css rules to nav menus  with info of status page (used for first use of private page, before membership) AND current user role AND Current page taxonomy
  *
  *
  * @Add new CSS Rules to each nav menu.
  **/
 add_filter('nav_menu_css_class' , __NAMESPACE__ . '\\nav_menu_add_post_status_class' , 10 , 2);
 function nav_menu_add_post_status_class($classes, $item){
+
+
+  $terms = get_the_terms( get_the_ID(), 'fiddlehed-restriction' );
+
+  if ( $terms && ! is_wp_error( $terms ) ) :
+
+      $restriction_slug = array();
+
+      foreach ( $terms as $term ) {
+          $restriction_slug[] = $term->slug;
+      }
+
+      $class_restriction = join( " ", $restriction_slug );
+
+    endif;
+
+
     $post_status = get_post_status($item->object_id);
   	$user_role   =  preg_replace('/\s+/', '', get_current_user_role());
     if ($user_role == '') {
@@ -416,7 +433,7 @@ function nav_menu_add_post_status_class($classes, $item){
     } else {
       $user_role = $user_role.'-role';
     }
-    $classes[] = $post_status.' '.$user_role;
+    $classes[] = $post_status.' '.$user_role. ' '.$class_restriction;
     return $classes;
 }
 
