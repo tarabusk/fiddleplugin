@@ -412,7 +412,7 @@ function nav_menu_add_post_status_class($classes, $item){
 
 
   $terms = get_the_terms( $item->object_id, 'fiddlehed-restriction' );
-  $class_restriction = '';
+  $class_restriction = 'no-fiddlehed-restrict';
   if ( $terms && ! is_wp_error( $terms ) ) :
 
       $restriction_slug = array();
