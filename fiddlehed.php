@@ -410,21 +410,17 @@ function get_current_user_role() {
 add_filter('nav_menu_css_class' , __NAMESPACE__ . '\\nav_menu_add_post_status_class' , 10 , 2);
 function nav_menu_add_post_status_class($classes, $item){
 
+  //if(current_user_can('memberpress_product_authorized_123')) { where 123 is the membership id
 
   $terms = get_the_terms( $item->object_id, 'fiddlehed-restriction' );
   $class_restriction = 'no-fiddlehed-restrict';
   if ( $terms && ! is_wp_error( $terms ) ) :
-
       $restriction_slug = array();
-
       foreach ( $terms as $term ) {
           $restriction_slug[] = $term->slug;
       }
-
       $class_restriction = join( " ", $restriction_slug );
-
     endif;
-
 
     $post_status = get_post_status($item->object_id);
   	$user_role   =  preg_replace('/\s+/', '', get_current_user_role());
@@ -494,30 +490,16 @@ function fiddlehed_member_init() {
 }
 add_action( 'init',   'fiddlehed_member_init' );
 
-//
-/************************************************/
-/*  add category support to pages >> Removed and replaced by the above
-/************************************************/
-/*
-function add_taxonomies_to_pages() {
 
-      register_taxonomy_for_object_type( 'category', 'page' );
-  }
+/************************************************/
+/*  Redirect logged in users to alternative home page
+/************************************************/
 
- add_action( 'init',  'add_taxonomies_to_pages' );
-*/
- /**
- * Show all parents, regardless of post status.
- *
- * @param   array  $args  Original get_pages() $args.
- *
- * @return  array  $args  Args set to also include posts with pending, draft, and private status.
- */
- /*
-function fiddlehed_show_all_parents( $args ) {
-	$args['post_status'] = array( 'publish', 'private' );
-	return $args;
+function fiddlehed__redirect()
+    {
+      if (is_front_page () && is_user_logged_in() ) {
+        wp_redirect ( home_url("/home-fiddlehed") );
+        exit;
+      }
 }
-add_filter( 'page_attributes_dropdown_pages_args',  'fiddlehed_show_all_parents' );
-add_filter( 'quick_edit_dropdown_pages_args',  'fiddlehed_show_all_parents' );
-*/
+add_action( 'template_redirect', 'fiddlehed__redirect' );
