@@ -541,11 +541,7 @@ function my_login_logo() { ?>
     <style type="text/css">
         #login h1 a, .login h1 a {
             background-image: url('https://fiddlehed.com/app/themes/sage-8.5.1/dist/images/fiddleguy-logo.png');
-        		height:65px;
-        		width:320px;
-        		background-size: 320px 65px;
         		background-repeat: no-repeat;
-        	   padding-bottom: 30px;
         }
     </style>
 <?php }
