@@ -503,3 +503,50 @@ function fiddlehed__redirect()
       }
 }
 add_action( 'template_redirect', 'fiddlehed__redirect' );
+
+/************************************************/
+/*  add shortcode to display Login button
+/************************************************/
+
+function fiddlehed_button_login ( $atts ) {
+
+  if (class_exists('acf') ) {
+    return '<div class="wrapper-btn"><a class="fiddlehed-login-btn" href="'. wp_login_url(  ) .'"></a></div>';
+  }
+
+
+}
+add_shortcode( 'loginFiddlehed',  'fiddlehed_button_login' );
+
+/************************************************/
+/*  add shortcode to display Free Lessons
+/************************************************/
+
+function fiddlehed_button_free ( $atts ) {
+
+  if (class_exists('acf')) {
+    return '<div class="wrapper-btn"><a class="fiddlehed-free-btn" href="'.get_field ("subscribe_button_link", 'options' ) .'" ></a></div>';
+  }
+
+
+}
+add_shortcode( 'freeFiddlehed',   'fiddlehed_button_free' );
+
+
+/************************************************/
+/*  Customizing LogIn logo
+/************************************************/
+
+function my_login_logo() { ?>
+    <style type="text/css">
+        #login h1 a, .login h1 a {
+            background-image: url('https://fiddlehed.com/app/themes/sage-8.5.1/dist/images/fiddleguy-logo.png');
+        		height:65px;
+        		width:320px;
+        		background-size: 320px 65px;
+        		background-repeat: no-repeat;
+        	   padding-bottom: 30px;
+        }
+    </style>
+<?php }
+add_action( 'login_enqueue_scripts', 'my_login_logo' );
