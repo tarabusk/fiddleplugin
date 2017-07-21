@@ -452,11 +452,8 @@ function fiddleHed_my_private_page_404() {
 }
 add_action( 'wp', 'fiddleHed_my_private_page_404' );
 
-
-
-
 /************************************************/
-/*  add plugin to display SUBSCRIBE button
+/*  add shortcode to display SUBSCRIBE button
 /************************************************/
 
 function fiddlehed_subscribe_sortcode ( $atts ) {
@@ -468,6 +465,30 @@ function fiddlehed_subscribe_sortcode ( $atts ) {
 
 }
 add_shortcode( 'subscribeFiddlehed',  'fiddlehed_subscribe_sortcode' );
+
+
+/************************************************/
+/*  add shortcode to display customized button
+/************************************************/
+
+
+add_shortcode( 'ButtonFiddlehed', 'fiddlehed_customized_shortcode' );
+
+function fiddlehed_customized_shortcode($atts = [], $content = null, $tag = '')
+{
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case((array)$atts, CASE_LOWER);
+
+    // override default attributes with user attributes
+    $wporg_atts = shortcode_atts([
+                                     'url' => 'https://fiddlehed.com/plans/subscribe/',
+                                     'txt' => 'SUBSCRIBE',
+                                 ], $atts, $tag);
+
+    if ($wporg_atts['url'] != '' && (class_exists('acf'))) {
+        return '<a href="'. $wporg_atts['url'] .'" class="button-subscribe">'.$wporg_atts['txt'].'</a>';
+    }
+}
 
 
 /************************************************/
