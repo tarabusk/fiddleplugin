@@ -580,7 +580,7 @@ function fiddlehed_posts_shortcode( $atts ) {
   $retval = '';
 
   $args = array(
-  	'numberposts' => $limit,
+  	'numberposts' => 10,
   	'offset' => 0,
   	'category' => 0,
   	'orderby' => 'post_date',
@@ -589,7 +589,7 @@ function fiddlehed_posts_shortcode( $atts ) {
   	'exclude' => '',
   	'meta_key' => '',
   	'meta_value' =>'',
-  	'post_type' => $type,
+  	'post_type' => 'post, page',
   	'post_status' => 'publish',
   	'suppress_filters' => true
   );
