@@ -590,10 +590,10 @@ function fiddlehed_posts_shortcode( $atts ) {
   	'meta_key' => '',
   	'meta_value' =>'',
   	'post_type' => $type,
-  	'post_status' => ' publish',
+  	'post_status' => 'publish',
   	'suppress_filters' => true
   );
-  $recent_posts = wp_get_recent_posts();
+  $recent_posts = wp_get_recent_posts($args);
 	foreach( $recent_posts as $recent ){
 		$retval .= '<div class="fiddlehed-posts">';
     if ( has_post_thumbnail( $recent["ID"]) ) {
