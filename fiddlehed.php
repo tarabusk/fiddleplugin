@@ -583,7 +583,7 @@ function fiddlehed_posts_shortcode( $atts ) {
   $args = array(
   	'numberposts' => $limit,
   	'post_type' => 'post',
-  	//'post_status' => 'publish',
+  	'post_status' => 'publish',
   );
   $recent_posts = wp_get_recent_posts($args);
 	foreach( $recent_posts as $recent ){
