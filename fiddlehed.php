@@ -567,3 +567,34 @@ function my_login_logo() { ?>
     </style>
 <?php }
 add_action( 'login_enqueue_scripts', 'my_login_logo' );
+
+
+/************************************************/
+/*  Shortcode display last posts
+/************************************************/
+
+function fiddlehed_posts_shortcode( $atts ) {
+	extract(shortcode_atts(array(
+	    'limit' => '10',
+      'type' => 'post, page',
+	), $atts));
+  $retval = '';
+
+  $args = array(
+  	'numberposts' => $limit,
+  	'post_type' => 'post',
+  	//'post_status' => 'publish',
+  );
+  $recent_posts = wp_get_recent_posts($args);
+	foreach( $recent_posts as $recent ){
+		$retval .= '<div class="fiddlehed-posts">';
+    if ( has_post_thumbnail( $recent["ID"]) ) {
+      $retval .=  get_the_post_thumbnail($recent["ID"],'thumbnail');
+    }
+     $retval .= '<a href="' . get_permalink($recent["ID"]) . '">' .   $recent["post_title"].'</a> </li> ';
+     $retval .= '</div>';
+	}
+	wp_reset_query();
+	return $retval;
+}
+add_shortcode('fiddlehed_posts',   'fiddlehed_posts_shortcode');
