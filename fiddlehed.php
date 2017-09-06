@@ -7,7 +7,7 @@ License:     GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
-function fiddlehed_breadcrumbs() {
+function fiddlehed_breadcrumbs () {
 
   /* === OPTIONS === */
   $text['home']     = 'Home'; // text for the 'Home' link
@@ -92,6 +92,10 @@ function fiddlehed_breadcrumbs() {
     } elseif ( is_year() ) {
       if ($show_home_link && $show_current) echo $sep;
       if ($show_current) echo $before . get_the_time('Y') . $after;
+
+    } elseif (is_singular( 'memberpressproduct' ) ) {
+      $post_type = get_post_type_object(get_post_type());
+      echo $sep . $before . $post_type->label . $after;
 
     } elseif ( is_single() && !is_attachment() ) {
       if ($show_home_link) echo $sep;
@@ -189,6 +193,7 @@ function fiddlehed_breadcrumbs() {
 
   }
 } // end of fiddlehed_breadcrumbs()
+
 
 /************************************/
 /* Customizing Editor WordPress     */
