@@ -315,6 +315,20 @@ function fiddleHed_google_analytics() {
 add_action( 'wp_head', 'fiddleHed_google_analytics', 10 );
 
 /************************************************/
+/* Adding Code between head tags                */
+/************************************************/
+
+function fiddleHed_add_code_head() {
+  if (class_exists('acf') ) {
+    $head_code =  get_field ('option_add_scripts', 'option');
+    if ($head_code) {
+        echo $head_code;
+    }
+  }
+}
+add_action( 'wp_head', 'fiddleHed_add_code_head', 10 );
+
+/************************************************/
 /* Create a role for beta tester  (on plugin activation)
 /************************************************/
 
@@ -603,3 +617,5 @@ function fiddlehed_posts_shortcode( $atts ) {
 	return $retval;
 }
 add_shortcode('fiddlehed_posts',   'fiddlehed_posts_shortcode');
+
+/* Add Pixel facebook */
